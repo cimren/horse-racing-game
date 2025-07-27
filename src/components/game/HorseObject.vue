@@ -90,9 +90,5 @@ watchEffect(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: left 0.02s linear;
-}
-.move {
-  left: 500px;
 }
 </style>

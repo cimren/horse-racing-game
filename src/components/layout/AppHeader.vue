@@ -44,7 +44,12 @@ const toggleStart = () => {
         @click="generateProgram"
         :disabled="!canGenerateProgram"
       />
-      <AppButton label="START / PAUSE" @click="toggleStart" :disabled="!canToggleStart" />
+      <AppButton
+        label="START / PAUSE"
+        name="toggleStart"
+        @click="toggleStart"
+        :disabled="!canToggleStart"
+      />
     </div>
   </header>
 </template>
