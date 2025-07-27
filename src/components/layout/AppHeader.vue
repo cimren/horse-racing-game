@@ -2,25 +2,49 @@
 import AppButton from '../ui/AppButton.vue'
 import { useScheduleStore } from '@/stores/schedule'
 import { useGameStore } from '@/stores/game'
+import { computed } from 'vue'
+import { GameStates } from '@/utils/constants'
+
 const scheduleStore = useScheduleStore()
 const gameStore = useGameStore()
 
+const generateProgramStates = [
+  GameStates.INITIAL,
+  GameStates.RACE_SCHEDULED,
+  GameStates.RACE_FINISHED,
+]
+const toggleStartStates = [
+  GameStates.RACE_SCHEDULED,
+  GameStates.RACE_STARTED,
+  GameStates.RACE_PAUSED,
+]
+
+const canGenerateProgram = computed(() => generateProgramStates.includes(gameStore.gameState))
+const canToggleStart = computed(() => toggleStartStates.includes(gameStore.gameState))
+
 const generateProgram = () => {
-  if (['RACE_STARTED', 'RACE_PAUSED'].includes(gameStore.gameState)) return
-  scheduleStore.generateSchedule()
-  gameStore.scheduleRace()
+  if (canGenerateProgram.value) {
+    scheduleStore.generateSchedule()
+    gameStore.scheduleRace()
+  }
 }
 const toggleStart = () => {
-  if (['INITIAL', 'ROUND_FINISHED', 'RACE_FINISHED'].includes(gameStore.gameState)) return
-  gameStore.toggleRace()
+  if (canToggleStart.value) {
+    gameStore.toggleRace()
+  }
 }
 </script>
 <template>
   <header>
     <h1>Horse Racing</h1>
     <div class="actions">
-      <AppButton label="GENERATE PROGRAM" name="generateProgram" @click="generateProgram" />
-      <AppButton label="START / PAUSE" @click="toggleStart" />
+      <AppButton
+        label="GENERATE PROGRAM"
+        name="generateProgram"
+        @click="generateProgram"
+        :disabled="!canGenerateProgram"
+      />
+      <AppButton label="START / PAUSE" @click="toggleStart" :disabled="!canToggleStart" />
     </div>
   </header>
 </template>

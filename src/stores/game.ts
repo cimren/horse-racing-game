@@ -1,36 +1,27 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { GameStates } from '@/utils/constants'
+import type { GameState } from '@/utils/interfaces'
 
 export const useGameStore = defineStore('game', () => {
-  const gameState = ref('INITIAL')
+  const gameState = ref(GameStates.INITIAL)
 
-  function updateGameState(state: string) {
+  const updateGameState = (state: GameState) => {
     gameState.value = state
   }
 
-  function scheduleRace() {
-    updateGameState('RACE_SCHEDULED')
-  }
-
-  function toggleRace() {
-    if (gameState.value === 'RACE_STARTED') {
-      updateGameState('RACE_PAUSED')
+  const toggleRace = () => {
+    if (gameState.value === GameStates.RACE_STARTED) {
+      updateGameState(GameStates.RACE_PAUSED)
     } else {
-      updateGameState('RACE_STARTED')
+      updateGameState(GameStates.RACE_STARTED)
     }
   }
 
-  function finishRound() {
-    updateGameState('ROUND_FINISHED')
-  }
-
-  function finishRace() {
-    updateGameState('RACE_FINISHED')
-  }
-
-  function resetGame() {
-    updateGameState('INITIAL')
-  }
+  const scheduleRace = () => updateGameState(GameStates.RACE_SCHEDULED)
+  const finishRound = () => updateGameState(GameStates.ROUND_FINISHED)
+  const finishRace = () => updateGameState(GameStates.RACE_FINISHED)
+  const resetGame = () => updateGameState(GameStates.INITIAL)
 
   return {
     gameState,

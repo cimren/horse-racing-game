@@ -4,6 +4,7 @@ import { computed, ref, watchEffect } from 'vue'
 import { useGameStore } from '@/stores/game'
 import { storeToRefs } from 'pinia'
 import type { HorseData } from '@/utils/interfaces'
+import { GameStates } from '@/utils/constants'
 
 const gameStore = useGameStore()
 const { gameState } = storeToRefs(gameStore)
@@ -58,15 +59,15 @@ const reset = () => {
 
 watchEffect(() => {
   switch (gameState.value) {
-    case 'RACE_STARTED':
+    case GameStates.RACE_STARTED:
       start()
       break
-    case 'RACE_PAUSED':
-    case 'RACE_FINISHED':
+    case GameStates.RACE_PAUSED:
+    case GameStates.RACE_FINISHED:
       stop()
       break
-    case 'ROUND_FINISHED':
-    case 'RACE_SCHEDULED':
+    case GameStates.ROUND_FINISHED:
+    case GameStates.RACE_SCHEDULED:
       reset()
       break
     default:

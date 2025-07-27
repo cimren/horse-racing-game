@@ -2,10 +2,12 @@
 import { defineProps } from 'vue'
 defineProps<{
   label?: string
+  name?: string
+  disabled?: boolean
 }>()
 </script>
 <template>
-  <button class="app-button">{{ label }}</button>
+  <button class="app-button" :name="name" :disabled="disabled">{{ label }}</button>
 </template>
 <style scoped>
 .app-button {
@@ -16,5 +18,10 @@ defineProps<{
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
+}
+
+.app-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 </style>

@@ -1,3 +1,5 @@
+import type { GameState } from './interfaces'
+
 export const horseData = [
   { id: 1, name: 'Thunderbolt', condition: 45, color: 'red' },
   { id: 2, name: 'Lightning', condition: 50, color: 'yellow' },
@@ -20,3 +22,12 @@ export const horseData = [
   { id: 19, name: 'Radiant', condition: 61, color: 'deeppink' },
   { id: 20, name: 'Titan', condition: 62, color: 'saddlebrown' },
 ]
+
+export const GameStates: Record<string, GameState> = {
+  INITIAL: 'INITIAL',
+  RACE_SCHEDULED: 'RACE_SCHEDULED',
+  RACE_STARTED: 'RACE_STARTED',
+  RACE_PAUSED: 'RACE_PAUSED',
+  ROUND_FINISHED: 'ROUND_FINISHED',
+  RACE_FINISHED: 'RACE_FINISHED',
+}
