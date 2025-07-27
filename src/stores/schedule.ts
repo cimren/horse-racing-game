@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { HorseData, Round } from '@/utils/interfaces'
 import { horseData } from '@/utils/constants'
