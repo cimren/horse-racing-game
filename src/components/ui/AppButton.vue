@@ -10,7 +10,7 @@ defineProps<{
 </template>
 <style scoped>
 .app-button {
-  background-color: #9ed7cb;
+  background-color: var(--color-button-primary);
   color: #000;
   padding: 10px 20px;
   border: none;

@@ -33,6 +33,10 @@ const toggleStart = () => {
     gameStore.toggleRace()
   }
 }
+
+const toggleButtonLabel = computed(() => {
+  return gameStore.gameState === GameStates.RACE_STARTED ? 'PAUSE' : 'START'
+})
 </script>
 <template>
   <header>
@@ -45,7 +49,7 @@ const toggleStart = () => {
         :disabled="!canGenerateProgram"
       />
       <AppButton
-        label="START / PAUSE"
+        :label="toggleButtonLabel"
         name="toggleStart"
         @click="toggleStart"
         :disabled="!canToggleStart"
@@ -55,8 +59,8 @@ const toggleStart = () => {
 </template>
 <style scoped>
 header {
-  background-color: #147a64;
-  color: #fff;
+  background-color: var(--color-background-green-soft);
+  color: var(--vt-c-white);
   padding: 10px;
   width: 100%;
   display: flex;

@@ -14,7 +14,7 @@ defineProps<{
 <style scoped>
 .round-info {
   text-align: center;
-  color: #b12e2e;
+  color: var(--color-red);
 }
 .round-info p {
   font-weight: bold;

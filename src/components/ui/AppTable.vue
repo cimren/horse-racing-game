@@ -52,29 +52,29 @@ const smallClass = computed(() => ({
 .app-table {
   display: flex;
   flex-direction: column;
-  border: 1px solid #6e6a6a;
+  border: 1px solid var(--color-border);
   height: max-content;
 }
 .app-table h2 {
   margin: 0;
   padding: 10px;
-  background-color: #dc7777;
-  color: #fff;
+  background-color: var(--color-background-pink);
+  color: var(-);
   text-align: center;
 }
 .app-table table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff;
+  background-color: var(--vt-c-white);
 }
 .app-table th,
 .app-table td {
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border-soft);
   padding: 8px;
   text-align: center;
 }
 .app-table th {
-  background-color: #b7a2a2;
+  background-color: var(--color-background-pink-dark);
 }
 .small td {
   font-size: 0.8rem;

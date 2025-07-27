@@ -32,6 +32,6 @@ const onRaceFinish = (horse: HorseData) => emit('onRaceFinish', horse)
   flex-direction: column;
   justify-content: center;
   margin-bottom: 20px;
-  border-right: 3px solid #b12e2e;
+  border-right: 3px solid var(--color-red);
 }
 </style>

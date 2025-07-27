@@ -25,8 +25,8 @@ test.describe('Horse Race Flow', () => {
   test('should start and pause race', async ({ page }) => {
     // Click on the Start / Pause button
     await page.getByRole('button', { name: 'GENERATE PROGRAM' }).click()
-    await page.getByRole('button', { name: 'START / PAUSE' }).click()
-    await page.getByRole('button', { name: 'START / PAUSE' }).click()
+    await page.getByRole('button', { name: 'START' }).click()
+    await page.getByRole('button', { name: 'PAUSE' }).click()
     await expect(page.getByText('Race paused. Click START to continue.')).toBeVisible()
   })
 })

@@ -35,8 +35,8 @@ const emit = defineEmits(['onRaceFinish'])
 .gate {
   width: 26px;
   height: 50px;
-  background-color: #357112;
-  border: 1px solid #fff;
+  background-color: var(--color-background-green);
+  border: 1px solid var(--vt-c-white);
   position: relative;
   text-align: center;
 }
@@ -45,7 +45,7 @@ const emit = defineEmits(['onRaceFinish'])
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-90deg);
-  color: #fff;
+  color: var(--vt-c-white);
 }
 .lane {
   flex-grow: 1;

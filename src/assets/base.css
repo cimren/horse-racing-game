@@ -1,4 +1,3 @@
-/* color palette from <https://github.com/vuejs/theme> */
 :root {
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
@@ -10,6 +9,14 @@
 
   --vt-c-gray: #aba6a6;
   --vt-c-indigo: #2c3e50;
+  --vt-c-red: #b12e2e;
+  --vt-c-pink: #dc7777;
+  --vt-c-pink-dark: #b7a2a2;
+  --vt-c-green: #357112;
+  --vt-c-green-soft: #147a64;
+
+  --vt-c-border: #6e6a6a;
+  --vt-c-border-soft: #ddd;
 
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
@@ -20,36 +27,31 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+  --vt-c-button-primary: #9ed7cb;
 }
 
-/* semantic color variables for this project */
+/* semantic color variables */
 :root {
   --color-background: var(--vt-c-gray);
   --color-background-soft: var(--vt-c-white-soft);
   --color-background-mute: var(--vt-c-white-mute);
+  --color-background-green: var(--vt-c-green);
+  --color-background-green-soft: var(--vt-c-green-soft);
+  --color-background-pink: var(--vt-c-pink);
+  --color-background-pink-dark: var(--vt-c-pink-dark);
 
-  --color-border: var(--vt-c-divider-light-2);
+  --color-border: var(--vt-c-border);
+  --color-border-soft: var(--vt-c-border-soft);
   --color-border-hover: var(--vt-c-divider-light-1);
 
   --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-1);
+  --color-button-primary: var(--vt-c-button-primary);
+  --color-red: var(--vt-c-red);
 
   --section-gap: 160px;
 }
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
-
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
-
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
-  }
-} */
 
 *,
 *::before,
