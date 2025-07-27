@@ -62,6 +62,7 @@ export const useScheduleStore = defineStore('schedule', () => {
 
   function resetRace() {
     rounds.value = []
+    currentRound.value = 0
   }
 
   return { rounds, currentRound, generateSchedule, goToNextRound, setRoundResult, resetRace }

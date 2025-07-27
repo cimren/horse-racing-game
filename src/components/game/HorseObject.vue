@@ -8,7 +8,9 @@ import type { HorseData } from '@/utils/interfaces'
 const gameStore = useGameStore()
 const { gameState } = storeToRefs(gameStore)
 
-const emit = defineEmits(['onRaceFinish'])
+const emit = defineEmits<{
+  (e: 'onRaceFinish', payload: HorseData): void
+}>()
 
 const { horse, distance } = defineProps({
   horse: {
@@ -22,15 +24,19 @@ const { horse, distance } = defineProps({
 })
 
 const position = ref(0)
-let animationFrame: number | null = null
 const speed = computed(() => horse.condition / 100) // piksel/frame
+
+let animationFrame: number | null = null
+let finished = false
 
 const start = () => {
   const animate = () => {
     if (position.value < distance) {
       position.value += speed.value
       animationFrame = requestAnimationFrame(animate)
-    } else {
+    } else if (!finished) {
+      finished = true
+      position.value = distance
       emit('onRaceFinish', { ...horse })
     }
   }
@@ -45,7 +51,9 @@ const stop = () => {
 }
 
 const reset = () => {
+  stop()
   position.value = 0
+  finished = false
 }
 
 watchEffect(() => {
@@ -58,8 +66,6 @@ watchEffect(() => {
       stop()
       break
     case 'ROUND_FINISHED':
-      reset()
-      break
     case 'RACE_SCHEDULED':
       reset()
       break

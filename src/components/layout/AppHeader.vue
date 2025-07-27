@@ -19,7 +19,7 @@ const toggleStart = () => {
   <header>
     <h1>Horse Racing</h1>
     <div class="actions">
-      <AppButton label="Generate Program" name="generateProgram" @click="generateProgram" />
+      <AppButton label="GENERATE PROGRAM" name="generateProgram" @click="generateProgram" />
       <AppButton label="START / PAUSE" @click="toggleStart" />
     </div>
   </header>

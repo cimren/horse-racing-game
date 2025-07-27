@@ -1,17 +1,14 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { HorseData } from '@/utils/interfaces'
 
 export const useGameStore = defineStore('game', () => {
   const gameState = ref('INITIAL')
-  const resultList = ref<Array<HorseData>>([])
 
   function updateGameState(state: string) {
     gameState.value = state
   }
 
   function scheduleRace() {
-    resultList.value = []
     updateGameState('RACE_SCHEDULED')
   }
 
@@ -37,7 +34,6 @@ export const useGameStore = defineStore('game', () => {
 
   return {
     gameState,
-    resultList,
     scheduleRace,
     toggleRace,
     finishRound,

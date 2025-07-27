@@ -32,6 +32,7 @@ const onRaceFinish = (horseData: HorseData) => {
         gameStore.toggleRace()
       }, 2000)
     } else {
+      resultList.value = []
       gameStore.finishRace()
     }
   }
@@ -40,17 +41,17 @@ const onRaceFinish = (horseData: HorseData) => {
 const getRaceStatus = () => {
   switch (gameStore.gameState) {
     case 'INITIAL':
-      return 'Click GENERATE PROGRAM to start'
+      return 'Welcome to the race. Click GENERATE PROGRAM to start.'
     case 'RACE_SCHEDULED':
-      return 'Race scheduled. Click START to begin'
+      return 'Race scheduled. Click START to begin.'
     case 'RACE_STARTED':
       return 'Race started...'
     case 'ROUND_FINISHED':
       return 'Round finished. Waiting for next round...'
     case 'RACE_PAUSED':
-      return 'Race paused. Click START to continue'
+      return 'Race paused. Click START to continue.'
     case 'RACE_FINISHED':
-      return 'Race finished. Click GENERATE PROGRAM to start a new race'
+      return 'Race finished. Click GENERATE PROGRAM to start a new race.'
     default:
       return ''
   }
