@@ -41,6 +41,8 @@ const getRaceStatus = () => {
   switch (gameStore.gameState) {
     case 'INITIAL':
       return 'Click GENERATE PROGRAM to start'
+    case 'RACE_SCHEDULED':
+      return 'Race scheduled. Click START to begin'
     case 'RACE_STARTED':
       return 'Race started...'
     case 'ROUND_FINISHED':
@@ -59,28 +61,30 @@ const convertToPx = (value: number) => {
 }
 </script>
 <template>
-  <div class="race-area" v-if="rounds.length > 0">
-    <p>{{ getRaceStatus() }}</p>
-    <div
-      class="race-tracks"
-      :style="{ width: `${convertToPx(rounds[currentRound].distance) + RACE_AREA_OFFSET}px` }"
-    >
-      <div class="track" v-for="(item, index) in rounds[currentRound].horseList" :key="item.id">
-        <div class="gate">
-          <span>{{ index + 1 }}</span>
-        </div>
-        <div class="lane">
-          <HorseObject
-            :key="item.id"
-            :horse="item"
-            :distance="convertToPx(rounds[currentRound].distance)"
-            @onRaceFinish="onRaceFinish"
-          />
+  <div class="race-area">
+    <p class="race-status">{{ getRaceStatus() }}</p>
+    <div v-if="rounds.length > 0">
+      <div
+        class="race-tracks"
+        :style="{ width: `${convertToPx(rounds[currentRound].distance) + RACE_AREA_OFFSET}px` }"
+      >
+        <div class="track" v-for="(item, index) in rounds[currentRound].horseList" :key="item.id">
+          <div class="gate">
+            <span>{{ index + 1 }}</span>
+          </div>
+          <div class="lane">
+            <HorseObject
+              :key="item.id"
+              :horse="item"
+              :distance="convertToPx(rounds[currentRound].distance)"
+              @onRaceFinish="onRaceFinish"
+            />
+          </div>
         </div>
       </div>
-    </div>
-    <div class="race-status">
-      <p>{{ rounds[currentRound].name }} {{ rounds[currentRound].distance }}m</p>
+      <div class="round-info">
+        <p>{{ rounds[currentRound].name }} {{ rounds[currentRound].distance }}m</p>
+      </div>
     </div>
   </div>
 </template>
@@ -89,6 +93,10 @@ const convertToPx = (value: number) => {
   padding: 20px;
   margin: 20px;
   width: 50%;
+}
+.race-status {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 .race-tracks {
   display: flex;
@@ -126,11 +134,11 @@ const convertToPx = (value: number) => {
 .track:last-child .lane {
   border-bottom: 1px dashed;
 }
-.race-status {
+.round-info {
   text-align: center;
   color: #b12e2e;
 }
-.race-status p {
+.round-info p {
   font-weight: bold;
 }
 </style>
