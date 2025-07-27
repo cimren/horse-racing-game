@@ -9,3 +9,9 @@ export const getRandomElements = (arr: Array<object>, count: number): Array<obje
   }
   return newArray
 }
+
+export const getOrdinalSuffix = (index: number): string => {
+  const suffixes = ['st', 'nd', 'rd', 'th']
+  const suffix = index < 4 ? suffixes[index] : 'th'
+  return `${index + 1}${suffix}`
+}

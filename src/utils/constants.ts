@@ -1,5 +1,7 @@
 import type { GameState } from './interfaces'
 
+export const MAX_HORSES_PER_RACE = 10
+
 export const horseData = [
   { id: 1, name: 'Thunderbolt', condition: 45, color: 'red' },
   { id: 2, name: 'Lightning', condition: 50, color: 'yellow' },

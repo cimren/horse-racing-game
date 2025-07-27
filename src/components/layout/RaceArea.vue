@@ -8,6 +8,7 @@ import { useGameStore } from '@/stores/game'
 import { storeToRefs } from 'pinia'
 import { ref, computed } from 'vue'
 import type { HorseData } from '@/utils/interfaces'
+import { MAX_HORSES_PER_RACE } from '@/utils/constants'
 
 const scheduleStore = useScheduleStore()
 const { rounds, currentRound } = storeToRefs(scheduleStore)
@@ -15,7 +16,6 @@ const gameStore = useGameStore()
 
 const resultList = ref<HorseData[]>([])
 
-const MAX_HORSES = 10
 const ROUND_DELAY = 1000
 const NEXT_ROUND_DELAY = 2000
 
@@ -30,7 +30,7 @@ const onRaceFinish = (horseData: HorseData) => {
   scheduleStore.setRoundResult(currentRound.value, [...resultList.value])
   const isLastRound = currentRound.value === rounds.value.length - 1
 
-  if (resultList.value.length >= MAX_HORSES) {
+  if (resultList.value.length >= MAX_HORSES_PER_RACE) {
     if (!isLastRound) {
       setTimeout(() => {
         resultList.value = []

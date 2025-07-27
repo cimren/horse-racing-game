@@ -19,7 +19,7 @@ const onRaceFinish = (horse: HorseData) => emit('onRaceFinish', horse)
       v-for="(horse, index) in horseList"
       :key="horse.id"
       :horse="horse"
-      :index="index"
+      :gateNumber="index + 1"
       :distance="distance"
       @onRaceFinish="onRaceFinish"
     />

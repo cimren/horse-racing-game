@@ -4,7 +4,7 @@ import type { HorseData } from '@/utils/interfaces'
 
 defineProps<{
   horse: HorseData
-  index: number
+  gateNumber: number
   distance: number
 }>()
 
@@ -14,7 +14,7 @@ const emit = defineEmits(['onRaceFinish'])
 <template>
   <div class="track">
     <div class="gate">
-      <span>{{ index + 1 }}</span>
+      <span>{{ gateNumber }}</span>
     </div>
     <div class="lane">
       <HorseObject

@@ -2,7 +2,8 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { HorseData, Round } from '@/utils/interfaces'
 import { horseData } from '@/utils/constants'
-import { getRandomElements } from '@/utils/helpers'
+import { getRandomElements, getOrdinalSuffix } from '@/utils/helpers'
+import { MAX_HORSES_PER_RACE } from '@/utils/constants'
 
 const ROUND_DISTANCES = [1200, 1400, 1600, 1800, 2000, 2200]
 
@@ -17,9 +18,9 @@ export const useScheduleStore = defineStore('schedule', () => {
   function generateSchedule() {
     currentRound.value = 0
     rounds.value = ROUND_DISTANCES.map((distance, index) => ({
-      name: `${index + 1}st Lap`,
+      name: `${getOrdinalSuffix(index)} Lap`,
       distance,
-      horseList: getRandomElements(horseData, 10) as HorseData[],
+      horseList: getRandomElements(horseData, MAX_HORSES_PER_RACE) as HorseData[],
       resultList: [] as HorseData[],
     }))
   }
