@@ -17,6 +17,6 @@ export const horseData = [
   { id: 16, name: 'Inferno', condition: 58, color: 'greenyellow' },
   { id: 17, name: 'Tempest', condition: 59, color: 'midnightblue' },
   { id: 18, name: 'Abyss', condition: 60, color: 'darkred' },
-  { id: 19, name: 'Radiant', condition: 61, color: 'lightpink' },
+  { id: 19, name: 'Radiant', condition: 61, color: 'deeppink' },
   { id: 20, name: 'Titan', condition: 62, color: 'saddlebrown' },
 ]

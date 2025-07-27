@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import IconHorse from '@/components/icons/IconHorse.vue'
-import { ref, watchEffect } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import { useGameStore } from '@/stores/game'
 import { storeToRefs } from 'pinia'
 import type { HorseData } from '@/utils/interfaces'
@@ -10,21 +10,25 @@ const { gameState } = storeToRefs(gameStore)
 
 const emit = defineEmits(['onRaceFinish'])
 
-const { horse } = defineProps({
+const { horse, distance } = defineProps({
   horse: {
     type: Object as () => HorseData,
+    required: true,
+  },
+  distance: {
+    type: Number,
     required: true,
   },
 })
 
 const position = ref(0)
 let animationFrame: number | null = null
-const speed = horse.condition / 100 // piksel/frame
+const speed = computed(() => horse.condition / 100) // piksel/frame
 
 const start = () => {
   const animate = () => {
-    if (position.value < 350) {
-      position.value += speed
+    if (position.value < distance) {
+      position.value += speed.value
       animationFrame = requestAnimationFrame(animate)
     } else {
       emit('onRaceFinish', { ...horse })

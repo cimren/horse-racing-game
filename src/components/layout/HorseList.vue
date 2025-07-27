@@ -18,5 +18,6 @@ const columns = [
   margin-top: 20px;
   height: 600px;
   overflow-y: auto;
+  width: 25%;
 }
 </style>

@@ -10,6 +10,7 @@ const { rounds, currentRound } = storeToRefs(scheduleStore)
 const gameStore = useGameStore()
 
 const resultList = ref<HorseData[]>([])
+const RACE_AREA_OFFSET = 50
 
 const onRaceFinish = (horseData: HorseData) => {
   if (resultList.value.some((horse) => horse.id === horseData.id)) {
@@ -52,17 +53,29 @@ const getRaceStatus = () => {
       return ''
   }
 }
+
+const convertToPx = (value: number) => {
+  return value / 4 // Assuming 1px = 4m for the race area
+}
 </script>
 <template>
   <div class="race-area" v-if="rounds.length > 0">
     <p>{{ getRaceStatus() }}</p>
-    <div class="race-tracks">
+    <div
+      class="race-tracks"
+      :style="{ width: `${convertToPx(rounds[currentRound].distance) + RACE_AREA_OFFSET}px` }"
+    >
       <div class="track" v-for="(item, index) in rounds[currentRound].horseList" :key="item.id">
         <div class="gate">
           <span>{{ index + 1 }}</span>
         </div>
         <div class="lane">
-          <HorseObject :key="item.id" :horse="item" @onRaceFinish="onRaceFinish" />
+          <HorseObject
+            :key="item.id"
+            :horse="item"
+            :distance="convertToPx(rounds[currentRound].distance)"
+            @onRaceFinish="onRaceFinish"
+          />
         </div>
       </div>
     </div>
@@ -73,9 +86,9 @@ const getRaceStatus = () => {
 </template>
 <style scoped>
 .race-area {
-  min-width: 440px;
   padding: 20px;
   margin: 20px;
+  width: 50%;
 }
 .race-tracks {
   display: flex;
