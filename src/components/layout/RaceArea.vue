@@ -4,21 +4,25 @@ import { useScheduleStore } from '@/stores/schedule'
 import { useGameStore } from '@/stores/game'
 import { storeToRefs } from 'pinia'
 import type { HorseData } from '@/utils/interfaces'
+import { ref } from 'vue'
 const scheduleStore = useScheduleStore()
 const { rounds, currentRound } = storeToRefs(scheduleStore)
 const gameStore = useGameStore()
 
-let resultList: HorseData[] = []
+const resultList = ref<HorseData[]>([])
 
 const onRaceFinish = (horseData: HorseData) => {
-  resultList.push(horseData)
-  scheduleStore.setRoundResult(currentRound.value, [...resultList])
-  if (resultList.length >= 10) {
+  if (resultList.value.some((horse) => horse.id === horseData.id)) {
+    return // Horse already finished this round
+  }
+  resultList.value.push(horseData)
+  scheduleStore.setRoundResult(currentRound.value, [...resultList.value])
+  if (resultList.value.length >= 10) {
     if (currentRound.value < 5) {
       // Simulate a delay for the next round
       setTimeout(() => {
+        resultList.value = []
         scheduleStore.goToNextRound()
-        resultList = []
         gameStore.finishRound()
       }, 1000)
 
@@ -58,7 +62,7 @@ const getRaceStatus = () => {
           <span>{{ index + 1 }}</span>
         </div>
         <div class="lane">
-          <HorseObject :key="index" :horse="item" @onRaceFinish="onRaceFinish" />
+          <HorseObject :key="item.id" :horse="item" @onRaceFinish="onRaceFinish" />
         </div>
       </div>
     </div>

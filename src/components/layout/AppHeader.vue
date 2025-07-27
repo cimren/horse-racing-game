@@ -6,12 +6,12 @@ const scheduleStore = useScheduleStore()
 const gameStore = useGameStore()
 
 const generateProgram = () => {
-  if (gameStore.gameState === 'RACE_STARTED' || gameStore.gameState === 'RACE_PAUSED') return
+  if (['RACE_STARTED', 'RACE_PAUSED'].includes(gameStore.gameState)) return
   scheduleStore.generateSchedule()
   gameStore.scheduleRace()
 }
 const toggleStart = () => {
-  if (gameStore.gameState === 'RACE_FINISHED' || gameStore.gameState === 'INITIAL') return
+  if (['INITIAL', 'ROUND_FINISHED', 'RACE_FINISHED'].includes(gameStore.gameState)) return
   gameStore.toggleRace()
 }
 </script>
@@ -19,7 +19,7 @@ const toggleStart = () => {
   <header>
     <h1>Horse Racing</h1>
     <div class="actions">
-      <AppButton label="Generate Program" @click="generateProgram" />
+      <AppButton label="Generate Program" name="generateProgram" @click="generateProgram" />
       <AppButton label="START / PAUSE" @click="toggleStart" />
     </div>
   </header>
