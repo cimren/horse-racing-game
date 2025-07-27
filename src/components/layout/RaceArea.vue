@@ -4,13 +4,17 @@ import { useScheduleStore } from '@/stores/schedule'
 import { useGameStore } from '@/stores/game'
 import { storeToRefs } from 'pinia'
 import type { HorseData } from '@/utils/interfaces'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 const scheduleStore = useScheduleStore()
 const { rounds, currentRound } = storeToRefs(scheduleStore)
 const gameStore = useGameStore()
 
 const resultList = ref<HorseData[]>([])
+
 const RACE_AREA_OFFSET = 50
+const MAX_HORSES = 10
+const ROUND_DELAY = 1000
+const NEXT_ROUND_DELAY = 2000
 
 const onRaceFinish = (horseData: HorseData) => {
   if (resultList.value.some((horse) => horse.id === horseData.id)) {
@@ -18,19 +22,21 @@ const onRaceFinish = (horseData: HorseData) => {
   }
   resultList.value.push(horseData)
   scheduleStore.setRoundResult(currentRound.value, [...resultList.value])
-  if (resultList.value.length >= 10) {
-    if (currentRound.value < 5) {
+  const isLastRound = currentRound.value === rounds.value.length - 1
+
+  if (resultList.value.length >= MAX_HORSES) {
+    if (!isLastRound) {
       // Simulate a delay for the next round
       setTimeout(() => {
         resultList.value = []
         scheduleStore.goToNextRound()
         gameStore.finishRound()
-      }, 1000)
+      }, ROUND_DELAY)
 
       //Start the next round after a delay
       setTimeout(() => {
         gameStore.toggleRace()
-      }, 2000)
+      }, NEXT_ROUND_DELAY)
     } else {
       resultList.value = []
       gameStore.finishRace()
@@ -38,7 +44,7 @@ const onRaceFinish = (horseData: HorseData) => {
   }
 }
 
-const getRaceStatus = () => {
+const raceStatus = computed(() => {
   switch (gameStore.gameState) {
     case 'INITIAL':
       return 'Welcome to the race. Click GENERATE PROGRAM to start.'
@@ -55,7 +61,9 @@ const getRaceStatus = () => {
     default:
       return ''
   }
-}
+})
+
+const currentDistancePx = computed(() => convertToPx(rounds.value[currentRound.value].distance))
 
 const convertToPx = (value: number) => {
   return value / 4 // Assuming 1px = 4m for the race area
@@ -63,23 +71,15 @@ const convertToPx = (value: number) => {
 </script>
 <template>
   <div class="race-area">
-    <p class="race-status">{{ getRaceStatus() }}</p>
+    <p class="race-status">{{ raceStatus }}</p>
     <div v-if="rounds.length > 0">
-      <div
-        class="race-tracks"
-        :style="{ width: `${convertToPx(rounds[currentRound].distance) + RACE_AREA_OFFSET}px` }"
-      >
+      <div class="race-tracks" :style="{ width: `${currentDistancePx + RACE_AREA_OFFSET}px` }">
         <div class="track" v-for="(item, index) in rounds[currentRound].horseList" :key="item.id">
           <div class="gate">
             <span>{{ index + 1 }}</span>
           </div>
           <div class="lane">
-            <HorseObject
-              :key="item.id"
-              :horse="item"
-              :distance="convertToPx(rounds[currentRound].distance)"
-              @onRaceFinish="onRaceFinish"
-            />
+            <HorseObject :horse="item" :distance="currentDistancePx" @onRaceFinish="onRaceFinish" />
           </div>
         </div>
       </div>
